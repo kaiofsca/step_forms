@@ -1,33 +1,37 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import * as C from '@chakra-ui/react'
+import Step from './components/Step'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [step, setStep] = useState(1)
+
+  const Steps = [1, 2, 3]
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <C.Flex h="100vh" align="center" justify="center">
+      <C.Center maxW={500} w="100%" py={10} px={2} flexDir="column">
+
+        <C.HStack spacing={4}>
+          {Steps.map((item) => (
+            <Step key={item} index={item} active={step === item} />
+          ))}
+        </C.HStack>
+
+        <C.Divider my={4} borderColor="blackAlpha.700" />
+
+        <C.HStack spacing={10} mt={4}>
+          <C.Button
+            bg="gray.300"
+            onClick={() => setStep(step - 1)}
+            disable={step === 1} 
+          > Voltar </C.Button>  
+          <C.Button 
+            colorScheme="blue"
+            onClick={() => step !== 3 && setStep(step + 1)}
+          > {step === 3 ? "Enviar" : "Próximo"} </C.Button>  
+        </C.HStack>
+      </C.Center>
+    </C.Flex>   
   )
 }
 
